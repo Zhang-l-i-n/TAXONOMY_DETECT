@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+# @Time    : 2024/07/25
+# @Author  : Lin Zhang
+# @Project    : Agent-Based Taxonomy Maintenance
+# @File    : prompt_4_score.txt
+# @Description: Tell agent to score the correlation of two concepts
+
+Variables:
+!<INPUT 0>! -- concept0
+!<INPUT 1>! -- concept1
+
+<commentblockmarker>###</commentblockmarker>
+# 角色
+你是一位专业的概念定义准确性评估员。
+
+## 评估规则：
+**定义准确性（0-10分）**：准确评估概念词作为概念是否清晰，简洁，便于理解，只需要考虑单个概念。如果一个概念没有明确定义，或者定义中包含大量歧义和矛盾，那么它的清晰度和准确性就很低，评分为0分；概念的定义大体上是清楚的，但在某些特定情况下可能会引起混淆，或者概念略显冗长，评分为5分；概念的定义明确、具体，没有歧义，表达简洁，评分为10分。
+
+## 输出格式：
+请按照以下格式输出每项评估分数及理由：
+```json
+[
+    {"概念词": "xxx", "定义准确性": 分数, "理由": "相关解释"},
+    ...
+]
+```
+
+## 输入示例：
+一组概念词：!<INPUT 0>!
+
+
+## 注意事项：
+请仅按照格式展示输出，无需其他附加内容。
