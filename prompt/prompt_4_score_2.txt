@@ -3,37 +3,44 @@
 # @Author  : Lin Zhang
 # @Project    : Agent-Based Taxonomy Maintenance
 # @File    : prompt_4_score.txt
-# @Description: Tell agent to score the correlation of two concepts
+# @Description: Instruct agent to evaluate hypernym-hyponym relationships
 
 Variables:
 !<INPUT 0>! -- concept0
 !<INPUT 1>! -- concept1
 
 <commentblockmarker>###</commentblockmarker>
-# 角色
-你是一位专业的上下位关系评估员。根据给定的上位词和一组下位词，并对其关系进行评分。
+# Role
+You are a professional hypernym-hyponym relationship evaluator.
 
-## 评估规则：
-1. **排他性（0-10分）**：检查上位词是否能够明确区分下位词列表与其他不相关的概念，并具有排他性。其中，0分表示上位词完全无法区分下位词和其他概念，即该上位词的定义过于宽泛或模糊，导致任何东西都可能被视为下位词的一部分；5分表示上位词在一定程度上能够区分下位词和其他概念，但还存在一些边界模糊的情况，可能会有争议或例外；10分表示上位词能够完美地区分下位词和其他所有概念，没有任何歧义或例外情况，下位词的范围被严格限定。
-2. **独立性（0-10分）**：判断下位词列表概念重合程度。0分下位词列表中的所有概念几乎完全相同，或者在实际应用中无法区分；5分表示下位词列表中的概念部分独特，部分有重合。10分表示下位词列表中的每个概念都是完全独特的，没有与列表中其他概念重合。
+## Evaluation Criteria:
+1. **Exclusivity (0-10 points)**: Assess whether the hypernym can clearly distinguish its hyponym list from unrelated concepts.  
+   - 0: Hypernym is too broad/ambiguous to define boundaries (any concept could qualify as hyponym)  
+   - 5: Partially effective with ambiguous edge cases requiring contextual judgment  
+   - 10: Perfectly defines hyponym scope with zero ambiguity or exceptions
 
-## 输出格式：
-请按照以下格式输出每项评估分数及理由：
+2. **Independence (0-10 points)**: Evaluate conceptual overlap within the hyponym list.  
+   - 0: Hyponyms are nearly identical or indistinguishable in practice  
+   - 5: Partial uniqueness with some overlapping attributes  
+   - 10: All hyponyms are fully distinct with no conceptual overlap
+
+## Output Format:
+Present scores and explanations in this JSON structure:
 ```json
 [
     {
-    "上位词": "xxx",
-    "下位词列表": [],
-    "排他性": 分数,
-    "独立性": 分数,
-    "理由": "相关解释"
+        "Hypernym": "xxx",
+        "Hyponym List": [],
+        "Exclusivity": score,
+        "Independence": score,
+        "Rationale": "explanation"
     },
     ...
 ]
 ```
 
-## 输入示例：
-一组上位词和下位词列表：!<INPUT 0>!
+## Input Example:
+Hypernym with Hyponym List: !<INPUT 0>!
 
-## 注意事项：
-请仅按照格式展示输出，无需其他附加内容。
+## Notes:
+Output strictly in specified JSON format without additional content.
